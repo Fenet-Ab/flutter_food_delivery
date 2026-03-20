@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
-import 'screens/food/food_screen.dart';
+import 'package:provider/provider.dart';
+import 'screens/home/home.dart';
+import 'core/providers/auth_provider.dart';
+import 'core/providers/cart_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -17,8 +28,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.orange,
         useMaterial3: true,
         scaffoldBackgroundColor: Colors.grey[50],
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          filled: true,
+          fillColor: Colors.grey[100],
+        ),
       ),
-      home: const FoodScreen(),
+      home: const HomeScreen(),
     );
   }
 }
